@@ -1,5 +1,5 @@
 // This is an example of a Zustand store, use this for async storage.
-// DO NOTE USE THIS FILE, create new ones in the state folder.
+// DO NOT USE THIS FILE, create new ones in the state folder.
 
 import { create } from "zustand";
 import { persist, createJSONStorage } from "zustand/middleware";

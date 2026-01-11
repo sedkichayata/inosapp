@@ -1,7 +1,13 @@
-const PROJECT_REF = 'xoisbitzqcxckobeojhr';
-const SERVICE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhvaXNiaXR6cWN4Y2tvYmVvamhyIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NzYyMTQ0OCwiZXhwIjoyMDgzMTk3NDQ4fQ.DkHhPjBlKNI9AETrO4X8IiEgqUoqRTkJQfYH5jeltg8';
+// Load environment variables from .env file
+const PROJECT_REF = process.env.EXPO_PUBLIC_SUPABASE_URL?.match(/https:\/\/([^.]+)\.supabase\.co/)?.[1] || '';
+const SERVICE_KEY = process.env.EXPO_PUBLIC_SUPABASE_SERVICE_ROLE_KEY || '';
 
 async function testEndpoint() {
+  if (!PROJECT_REF || !SERVICE_KEY) {
+    console.error('Missing environment variables: EXPO_PUBLIC_SUPABASE_URL or EXPO_PUBLIC_SUPABASE_SERVICE_ROLE_KEY');
+    return;
+  }
+
   // Test the database query endpoint
   const response = await fetch(`https://api.supabase.com/v1/projects/${PROJECT_REF}/database/query`, {
     method: 'POST',
