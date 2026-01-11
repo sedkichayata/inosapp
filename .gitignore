@@ -43,3 +43,5 @@ yarn-error.*
 
 # Expo log
 expo.log
+node_modules/
+.env
