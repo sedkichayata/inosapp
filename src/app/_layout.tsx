@@ -1,19 +1,16 @@
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useColorScheme } from '@/lib/useColorScheme';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
 import { AuthProvider } from '@/lib/AuthProvider';
-import { useEffect, useState } from 'react';
+import { useFrameworkReady } from '@vibecodeapp/sdk';
 
 export const unstable_settings = {
   initialRouteName: 'index',
 };
-
-SplashScreen.preventAutoHideAsync();
 
 const queryClient = new QueryClient();
 
@@ -66,21 +63,7 @@ function RootLayoutNav({ colorScheme }: { colorScheme: 'light' | 'dark' | null |
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();
-  const [isReady, setIsReady] = useState(false);
-
-  useEffect(() => {
-    // Hide splash screen after a short delay to ensure store is hydrated
-    const timer = setTimeout(() => {
-      setIsReady(true);
-      SplashScreen.hideAsync();
-    }, 500);
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (!isReady) {
-    return null;
-  }
+  useFrameworkReady();
 
   return (
     <QueryClientProvider client={queryClient}>
